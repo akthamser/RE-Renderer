@@ -4,7 +4,7 @@
 #include"Renderer/Window.h"
 #include"Renderer/Renderer.h"
 #include"ScreenRecorder.h"
-
+#include"Renderer/Scene.h"
 
 int main(){
 
@@ -12,14 +12,20 @@ int main(){
     Renderer renderer = Renderer(window);
     glViewport(0, 0, window.Width, window.Height);
 
-    bool recorde = false;
-    ScreenRecorder screenRecorder = ScreenRecorder(window.Width, window.Height,60,"Recordings/video.mp4",false);
+ 
 
-    if (recorde)
-        screenRecorder.StartRecording();
 
     double previousTime = glfwGetTime();
     int frameCount = 0;
+
+    Scene scene;
+    scene.CreateEntity();
+    scene.CreateEntity();
+    unsigned int id = scene.CreateEntity("car");
+    scene.CreateEntity("wheel1",id);
+    scene.CreateEntity("wheel2",id);
+
+    scene.PrintEntities();
 
     while (!window.ShouldClose())
     {
@@ -34,10 +40,9 @@ int main(){
             frameCount = 0;
         }
 
-        renderer.Render();
+       // renderer.Render();
 
-      if(recorde)
-        screenRecorder.captureFrame();
+
 
         glfwPollEvents();
         window.SwapBuffers();
