@@ -1,7 +1,7 @@
 #include"Scene.h"
 
 
-//TO do assigne the childrens if the parent isnt 0
+
 
 unsigned int Scene::CreateEntity(std::string name , unsigned int parentID ) {
 
@@ -41,12 +41,59 @@ void Scene::RemoveEntity(unsigned int entityID) {
 	EntityMap.erase(entityID);
 };
 
-void Scene::PrintEntities() const {
-	for (const auto& entity : Entites) {
-		std::cout << "Entity ID: " << entity.ID
-			<< ", Name: " << entity.Name
-			<< ", Parent ID: " << entity.ParentID << std::endl;
-		for (int i=0 ; i<entity.ChildrenIDs.size() ; i++)
-			std::cout << "Child "<< i << "Id : " << entity.ChildrenIDs[i] << std::endl;
+void Scene::makeChild(int id, int parentId) {
+	
+	auto it = EntityMap.find(id);
+	if (it == EntityMap.end())
+		return;
+
+	int index = it->second;
+
+	it = EntityMap.find(parentId);
+	if (parentId != 0 && it==EntityMap.end())
+		return;
+
+
+
+	int currentParentId = Entites[index].ParentID;
+	if (currentParentId != 0)
+	{
+		auto& oldChildrens =Entites[EntityMap[currentParentId]].ChildrenIDs;
+		oldChildrens.erase(std::remove(oldChildrens.begin(), oldChildrens.end(), id), oldChildrens.end());
 	}
+
+	Entites[index].ParentID = parentId;
+	if(parentId != 0)
+	Entites[it->second].ChildrenIDs.push_back(id);
+	
+}
+
+void Scene::PrintHierarchy() {
+	
+	
+
+	for (const auto& entity : Entites) {
+		if (entity.ParentID == 0)
+		{
+			PrintEntity(entity.ID);
+			
+		}	
+	}
+}
+
+void Scene::PrintEntity(int id, int depth) {
+
+	std::string space(3 * depth, ' ');
+
+	int index = EntityMap[id];
+
+	std::cout << space  << "Entity ID: " << id << " Name: " << Entites[index].Name << std::endl;
+
+	
+	for (int i = 0; i < Entites[index].ChildrenIDs.size();i++) {
+		
+		PrintEntity(Entites[index].ChildrenIDs[i], depth +1);
+	}
+
+
 }

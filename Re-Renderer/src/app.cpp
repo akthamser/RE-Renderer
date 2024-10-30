@@ -6,6 +6,7 @@
 #include"ScreenRecorder.h"
 #include"Renderer/Scene.h"
 
+
 int main(){
 
     Window window = Window(800, 600,"Re-Renderer",false);
@@ -20,12 +21,19 @@ int main(){
 
     Scene scene;
     scene.CreateEntity();
-    scene.CreateEntity();
+    int id1 = scene.CreateEntity("father");
     unsigned int id = scene.CreateEntity("car");
-    scene.CreateEntity("wheel1",id);
-    scene.CreateEntity("wheel2",id);
+    int id2 =scene.CreateEntity("wheel1",id);
+    int id3 =scene.CreateEntity("wheel2",id);
+ 
+    scene.makeChild(id,id1);
+    scene.makeChild(id2, 0);
+   
+    scene.PrintHirachy();
 
-    scene.PrintEntities();
+
+
+    
 
     while (!window.ShouldClose())
     {
@@ -34,7 +42,7 @@ int main(){
 
         if (currentTime - previousTime >= 1.0) {
             double fps = double(frameCount) / (currentTime - previousTime);
-            std::cout << "FPS: " << fps << std::endl;
+           // std::cout << "FPS: " << fps << std::endl;
 
             previousTime = currentTime;
             frameCount = 0;
