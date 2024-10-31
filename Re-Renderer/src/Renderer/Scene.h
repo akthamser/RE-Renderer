@@ -5,9 +5,10 @@
 #include<memory>
 #include<iostream>
 #include"../config.h"
-#include"Entity.h"
 #include<optional>
-#include"SparseSet.h"
+#include"ComponentRegistry.h"
+#include"ComponentsHandler.h"
+#include"Entity.h"
 
 
 namespace Re_Renderer {
@@ -17,8 +18,11 @@ namespace Re_Renderer {
 	class Scene {
 
 	public:
-		std::vector<Entity> Entites;
+		
+		std::vector<Entity> Entities;
 		std::unordered_map<EntID, int> EntityMap;
+
+		ComponentsHandler Components;
 
 		Scene() = default;
 		EntID CreateEntity(std::string name = "", EntID parentID = 0);

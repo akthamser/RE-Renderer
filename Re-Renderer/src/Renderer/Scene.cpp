@@ -10,7 +10,7 @@ Entity* Scene::getEntityByID(const EntID& id) {
 	if (it == EntityMap.end())
 		return nullptr;
 
-	return &Entites[it->second];
+	return &Entities[it->second];
 }
 EntID Scene::CreateEntity(std::string name , EntID parentID ) {
 
@@ -27,8 +27,8 @@ EntID Scene::CreateEntity(std::string name , EntID parentID ) {
 
 	}
 
-	Entites.emplace_back(currentID,name==""? "Entity " + std::to_string(currentID) : name, parentID,this);
-	EntityMap[currentID] = Entites.size() - 1;
+	Entities.emplace_back(currentID,name==""? "Entity " + std::to_string(currentID) : name, parentID,this);
+	EntityMap[currentID] = Entities.size() - 1;
 	currentID++;
 	return currentID - 1;
 };
@@ -41,12 +41,12 @@ void Scene::RemoveEntity(EntID entityID) {
 		return;
 
 	int index = it->second;
-	if (index < Entites.size() - 1) {
-		Entites[index] = Entites.back();
-		EntityMap[Entites[index].getID()] = index;
+	if (index < Entities.size() - 1) {
+		Entities[index] = Entities.back();
+		EntityMap[Entities[index].getID()] = index;
 	}
 
-	Entites.pop_back();
+	Entities.pop_back();
 	EntityMap.erase(entityID);
 };
 
@@ -64,16 +64,16 @@ void Scene::makeChild(EntID id, EntID parentId) {
 
 
 
-	int currentParentId = Entites[index].getParentID();
+	int currentParentId = Entities[index].getParentID();
 	if (currentParentId != NullEntID)
 	{
-		Entites[EntityMap[currentParentId]].removeChild(id);
+		Entities[EntityMap[currentParentId]].removeChild(id);
 
 	}
 
-	Entites[index].setParentID(parentId);
+	Entities[index].setParentID(parentId);
 	if(parentId != NullEntID)
-	Entites[it->second].addChild(id);
+	Entities[it->second].addChild(id);
 	
 }
 
@@ -81,7 +81,7 @@ void Scene::PrintHierarchy() {
 	
 	
 
-	for (Entity& entity : Entites) {
+	for (Entity& entity : Entities) {
 		if (entity.getParentID() == NullEntID)
 		{
 			PrintEntity(&entity);

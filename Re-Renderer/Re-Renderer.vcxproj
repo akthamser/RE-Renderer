@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\Dependencies\stb_image.h" />
+    <ClInclude Include="src\Renderer\ComponentsHandler.h" />
     <ClInclude Include="src\Renderer\Mesh.h" />
     <ClInclude Include="src\Renderer\Entity.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />

@@ -4,7 +4,6 @@
 #include<unordered_map>
 #include<memory>
 #include<iostream>
-#include"Entity.h"
 #include"../config.h"
 
 namespace Re_Renderer {
@@ -20,7 +19,7 @@ namespace Re_Renderer {
 
 
 		template<typename... Arg>
-		void emplace_back(EntID id, Arg&&... args);
+		T* emplace(EntID id, Arg&&... args);
 		void remove(EntID id);
 
 		T* getComponent(EntID id);
@@ -51,11 +50,11 @@ namespace Re_Renderer {
 
 	template<typename T>
 	template<typename... Arg>
-	void ComponentRegistry<T>::emplace_back(EntID id, Arg&&... args) {
+	T* ComponentRegistry<T>::emplace(EntID id, Arg&&... args) {
 		
 		auto it = m_Map.find(id);
 		if (it != m_Map.end())
-			return;
+			return &m_Components[it->second];
 
 		if (size() >= capacity() ) {
 			grow();
@@ -65,7 +64,7 @@ namespace Re_Renderer {
 		m_Components.emplace_back(std::forward<Arg>(args)...);
 		m_Entities.emplace_back(id);
 
-
+		return &m_Components.back();
 	}
 	
 	template<typename T>
