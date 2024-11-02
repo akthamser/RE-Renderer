@@ -29,6 +29,7 @@ public:
 	Mesh(std::vector<Vertex> verticies, std::vector<unsigned int> indicies, std::vector<Texture> textures);
 	
 	
+	
 
 private:
 	unsigned int VAO, VBO, EBO;

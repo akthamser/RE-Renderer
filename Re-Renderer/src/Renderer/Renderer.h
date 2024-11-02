@@ -7,20 +7,34 @@
 #include<vector>
 #include<string>
 #include"../Dependencies/stb_image.h"
+#include"Scene.h"
+#include"Components.h"
 
-class Renderer {
+namespace Re_Renderer {
 
-public:
-	Renderer(Window& window);
-	~Renderer();
 
-	void Render();
+	struct OpenGlMesh {
 
-private:
-	Shader* m_shader;
-	unsigned int VAO, VBO, EBO;
-	Window& m_window;
-	unsigned int cubemapID;
+		unsigned int VAO, VBO, EBO;
+		OpenGlMesh() = default;
+	};
 
-	
-};
+	class Renderer {
+
+	public:
+		Renderer(Window& window);
+		~Renderer();
+
+		void Render();
+
+	private:
+		Shader* m_shader;
+		unsigned int VAO, VBO, EBO;
+		Window& m_window;
+		unsigned int cubemapID;
+		Scene m_scene;
+		std::unordered_map<Components::Mesh*, OpenGlMesh> m_OpenGlMeshes;
+	};
+
+
+}

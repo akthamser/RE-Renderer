@@ -3,9 +3,13 @@
 
 out vec4 FragColor;
 
+in vec3 FragPos;
+in vec3 Normal;
+in vec2 TexCoords;
+
+uniform vec3 color;
 
 void main() {
 
-    vec3 col = vec3(.5,.8,.3);
-    FragColor = vec4(col, 1.0);   
+    FragColor = vec4(color, 1.0);   
 }

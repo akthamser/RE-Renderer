@@ -37,10 +37,10 @@ namespace Re_Renderer {
 		ComponentsHandler& componentsHundler();
 
 		template<typename T, typename... Arg>
-		T& addComponent(Arg&&... args);
+		T* addComponent(Arg&&... args);
 
 		template<typename T>
-		T& getComponent();
+		T* getComponent();
 
 		template<typename T>
 		void removeComponent();
@@ -59,17 +59,17 @@ namespace Re_Renderer {
 
 
 	template<typename T, typename... Arg>
-	T& Entity::addComponent(Arg&&... args) {
+	T* Entity::addComponent(Arg&&... args) {
 
 		std::shared_ptr<ComponentRegistry<T>> registry = componentsHundler().getRegistry<T>();
 		T* comp = registry->emplace(m_ID, std::forward<Arg>(args)...);
-		return *comp;
+		return comp;
 	};
 
 	template<typename T>
-	T& Entity::getComponent() {
+	T* Entity::getComponent() {
 		T* comp = (componentsHundler().getRegistry<T>())->getComponent(m_ID);
-		return *comp;
+		return comp;
 	};
 
 	template<typename T>
