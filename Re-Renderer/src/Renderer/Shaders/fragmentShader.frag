@@ -7,7 +7,7 @@ in vec3 FragPos;
 in vec3 Normal;
 in vec2 TexCoords;
 
-uniform vec3 color;
+uniform vec3 color = vec3(1,1,1);
 
 void main() {
 

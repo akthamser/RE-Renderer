@@ -18,7 +18,6 @@ Window::Window(int width,int height,const char* title,bool fullScreen):Width(wid
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GL_TRUE);
-    
 
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
     const GLFWvidmode* mode = glfwGetVideoMode(monitor);
@@ -39,6 +38,7 @@ Window::Window(int width,int height,const char* title,bool fullScreen):Width(wid
 
     glfwSetWindowUserPointer(m_window, this);
 
+    glfwSwapInterval(0);
     glfwSetFramebufferSizeCallback(m_window, window_size_call_back);
    
 }

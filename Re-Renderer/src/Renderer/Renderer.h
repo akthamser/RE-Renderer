@@ -18,22 +18,32 @@ namespace Re_Renderer {
 		unsigned int VAO, VBO, EBO;
 		OpenGlMesh() = default;
 	};
+	
 
 	class Renderer {
 
 	public:
 		Renderer(Window& window);
-		~Renderer();
+		~Renderer() = default;
 
-		void Render();
+
+		void setupScene(Scene& scene);
+		void renderScene(Scene& scene);
+
 
 	private:
-		Shader* m_shader;
-		unsigned int VAO, VBO, EBO;
+
 		Window& m_window;
-		unsigned int cubemapID;
-		Scene m_scene;
+		std::vector<Shader> m_Shaders;
 		std::unordered_map<Components::Mesh*, OpenGlMesh> m_OpenGlMeshes;
+		ShaderType activeShader = ShaderType::Count; // using Count as Null
+		Shader* m_shader = nullptr;
+
+		void setupShaders();
+		Shader* getShader(ShaderType shadertype);
+		void setupMesh(Components::Mesh& mesh);
+		void setMaterialUniforms(const Components::Material& material,const Shader& shader);
+
 	};
 
 

@@ -25,7 +25,7 @@ namespace Re_Renderer {
 		ComponentsHandler Components;
 
 		Scene() = default;
-		EntID CreateEntity(std::string name = "", EntID parentID = 0);
+		Entity& CreateEntity(std::string name = "", EntID parentID = 0);
 		void RemoveEntity(EntID entityID);
 		void makeChild(EntID id, EntID parentId);
 		void PrintHierarchy();

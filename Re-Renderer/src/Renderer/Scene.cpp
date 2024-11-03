@@ -12,7 +12,7 @@ Entity* Scene::getEntityByID(const EntID& id) {
 
 	return &Entities[it->second];
 }
-EntID Scene::CreateEntity(std::string name , EntID parentID ) {
+Entity& Scene::CreateEntity(std::string name , EntID parentID ) {
 
 	if (parentID != NullEntID)
 	{
@@ -30,7 +30,7 @@ EntID Scene::CreateEntity(std::string name , EntID parentID ) {
 	Entities.emplace_back(currentID,name==""? "Entity " + std::to_string(currentID) : name, parentID,this);
 	EntityMap[currentID] = Entities.size() - 1;
 	currentID++;
-	return currentID - 1;
+	return Entities.back();
 };
 
 

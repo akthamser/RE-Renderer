@@ -4,7 +4,8 @@
 #include"Components.h"
 #include"../config.h"
 #include"ShaderType.h"
-
+#include"Resources.h"
+#include"Timer.hpp"
 
 namespace Re_Renderer {
 
@@ -16,72 +17,41 @@ namespace Re_Renderer {
             return;
         }
 
+        setupShaders();
+     
 
-        m_shader = new Shader("vertexShader.vert", "fragmentShader.frag");
-
-
-
-
+    }
 
 
 
-        std::vector<Vertex> cubeVertices = {
-            // Positions           // Normals           // Texture Coords
-            { glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(0.0f, 0.0f) }, // Back bottom left
-            { glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(1.0f, 0.0f) }, // Back bottom right
-            { glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(1.0f, 1.0f) }, // Back top right
-            { glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(0.0f, 1.0f) }, // Back top left
-            { glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(0.0f, 0.0f) }, // Front bottom left
-            { glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f) }, // Front bottom right
-            { glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f) }, // Front top right
-            { glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0f) }  // Front top left
-        };
+    void Renderer::setupShaders() {
+        for (int i = 0; i < (int)ShaderType::Count; i++) {
+            
+            m_Shaders.emplace_back(shaderPaths[i].vertexPath.c_str(), shaderPaths[i].fragmentPath.c_str());
+        
+        }
+    };
+    Shader* Renderer::getShader(ShaderType shadertype) {
+        return &m_Shaders[(size_t)shadertype];
 
-        std::vector<unsigned int> cubeIndices = {
-            // Back face
-            0, 1, 2,
-            0, 2, 3,
-            // Front face
-            4, 5, 6,
-            4, 6, 7,
-            // Left face
-            0, 3, 7,
-            0, 7, 4,
-            // Right face
-            1, 5, 6,
-            1, 6, 2,
-            // Bottom face
-            0, 1, 5,
-            0, 5, 4,
-            // Top face
-            3, 2, 6,
-            3, 6, 7
-        };
-      
-        Entity* cube = m_scene.getEntityByID(m_scene.CreateEntity("cube"));
-        auto transform = cube->addComponent<Components::Transform>();
+    };
 
-    
-
-        auto mesh = cube->addComponent<Components::Mesh>(cubeVertices, cubeIndices);
-
-        auto material = cube->addComponent<Components::Material>(ShaderType::Basic);
-        material->colorProperties["color"] = glm::vec3(0,1,0);
- 
-
+    void Renderer::setupMesh(Components::Mesh& mesh) {
+        
+        GLuint VAO, VBO, EBO;
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
 
         glGenBuffers(1, &VBO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-        glBufferData(GL_ARRAY_BUFFER, mesh->Vertices.size() * sizeof(Vertex), &mesh->Vertices[0], GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, mesh.Vertices.size() * sizeof(Vertex), &mesh.Vertices[0], GL_STATIC_DRAW);
 
         glGenBuffers(1, &EBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->Indices.size() * sizeof(unsigned int), &mesh->Indices[0], GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.Indices.size() * sizeof(unsigned int), &mesh.Indices[0], GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex) , (void*)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
         glEnableVertexAttribArray(1);
@@ -92,40 +62,59 @@ namespace Re_Renderer {
 
         glBindVertexArray(0);
 
-        m_OpenGlMeshes[mesh].VAO =  VAO;
+        m_OpenGlMeshes[&mesh].VAO = VAO;
+    };
 
+    void Renderer::setMaterialUniforms(const Components::Material& material,const Shader& shader) {
+        
+        shader.setVec3("color",material.Color);
+    };
+
+    void Renderer::setupScene(Scene& scene) {
+
+        auto Meshes = scene.Components.getRegistry<Components::Mesh>();
+        for (auto& mesh : Meshes->getAllComponents()) {
+            setupMesh(mesh);
+        }
     }
 
-    Renderer::~Renderer() {
-        delete m_shader;
-    }
-
-    void Renderer::Render() {
+    void Renderer::renderScene(Scene& scene) {
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
+        auto Meshes = scene.Components.getRegistry<Components::Mesh>();
+        auto Materials = scene.Components.getRegistry<Components::Material>();
+        auto Transforms = scene.Components.getRegistry<Components::Transform>();
 
-        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
         
-        auto Meshes = m_scene.Components.getRegistry<Components::Mesh>();
-        auto Materials = m_scene.Components.getRegistry<Components::Material>();
-        auto Transforms = m_scene.Components.getRegistry<Components::Transform>();
 
+        
         for (EntID id : Meshes->getEntitiesIds())
         {
-             m_shader->use();
-        
-            Components::Mesh* mesh = Meshes->getComponent(id);
-            auto material = Materials->getComponent(id);
+            auto mesh = Meshes->getComponent(id);
+            auto material  = Materials->getComponent(id);
+            auto transform = Transforms->getComponent(id);
+
+
+
+            if (activeShader != material->shaderType || m_shader == nullptr)
+            {
+                Timer timer("change the Shader");
+                m_shader = getShader(material->shaderType);
+                activeShader = material->shaderType;
+                m_shader->use();
+
+            }
+
             if (material != nullptr) {
 
-                glm::vec3 col = material->colorProperties["color"];
-                m_shader->setVec3("color", col);
+                setMaterialUniforms(*material,*m_shader);
             }
-            auto transform = Transforms->getComponent(id);
       
+        
+
             glm::mat4 view = glm::lookAt(
                 glm::vec3(0.0f, 0.0f, 3.0f),  // Camera position in world space
                 glm::vec3(0.0f, 0.0f, 0.0f),  // Target point in world space
@@ -144,10 +133,13 @@ namespace Re_Renderer {
             m_shader->setMat4("view", view);
             m_shader->setMat4("projection", projection);
 
+            
 
             glBindVertexArray(m_OpenGlMeshes[mesh].VAO);
-            glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+            glDrawElements(GL_TRIANGLES, mesh->Indices.size(), GL_UNSIGNED_INT, 0);
         }
+        
         
 
  

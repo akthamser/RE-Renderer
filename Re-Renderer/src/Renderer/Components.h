@@ -61,8 +61,8 @@ namespace Re_Renderer {
 			std::vector<unsigned int> Indices;
 
 			Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indicies):Vertices(vertices),Indices(indicies) {};
-
-
+			Mesh(const Mesh& other):Vertices(other.Vertices),Indices(other.Indices) {};
+			~Mesh() = default;
 		
 
 
@@ -73,18 +73,14 @@ namespace Re_Renderer {
 
 			ShaderType shaderType;
 
-			std::unordered_map<std::string, std::string> textures; 
-			std::unordered_map<std::string, float> floatProperties; 
-			std::unordered_map<std::string, glm::vec3> colorProperties;
+			glm::vec3 Color;
 
 			Material(ShaderType shaderType,
-				const std::unordered_map<std::string, std::string>& textures = {},
-				const std::unordered_map<std::string, float>& floatProperties = {},
-				const std::unordered_map<std::string, glm::vec3>& colorProperties = {})
+				glm::vec3 color = glm::vec3(1)
+				)
 				: shaderType(shaderType), 
-				textures(textures),     
-				floatProperties(floatProperties), 
-				colorProperties(colorProperties) 
+				Color(color)
+
 			{
 			}
 
