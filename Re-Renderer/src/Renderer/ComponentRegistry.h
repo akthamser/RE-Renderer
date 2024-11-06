@@ -22,7 +22,9 @@ namespace Re_Renderer {
 		T* emplace(EntID id, Arg&&... args);
 		void remove(EntID id);
 
-		T* getComponent(EntID id);
+		T* getComponent(EntID id); 
+		T* getComponentByIndex(size_t i);
+		EntID getEntity(size_t i);
 
 		bool contains(EntID id) const;
 		size_t size() const;
@@ -100,6 +102,24 @@ namespace Re_Renderer {
 
 		size_t index = it->second;
 		return &m_Components[index];
+	};
+
+	template<typename T>
+	T* ComponentRegistry<T>::getComponentByIndex(size_t i) {
+
+		if (i >= m_Components.size()) 
+			return nullptr;
+
+		return &m_Components[i];
+	};
+
+	template<typename T>
+	EntID ComponentRegistry<T>::getEntity(size_t i) {
+	
+		if (i >= m_Entities.size())
+			return nullptr;
+
+		return m_Entities[i];
 	};
 
 
