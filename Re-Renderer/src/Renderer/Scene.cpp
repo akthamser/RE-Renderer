@@ -1,4 +1,5 @@
 #include"Scene.h"
+#include"ComponentsHandler.h"
 
 
 namespace Re_Renderer {
@@ -106,6 +107,19 @@ void Scene::PrintEntity(Entity* entity, int depth) {
 
 
 }
+
+Components::Camera* Scene::getActiveCamera()  { 
+	return Components.getRegistry<Components::Camera>()->getComponentByIndex(activeCamera);
+};
+
+void Scene::setActiveCamera(size_t i) {
+
+	if (Components.getRegistry<Components::Camera>()->getComponentByIndex(i) != nullptr)
+		activeCamera = i;
+	
+		
+
+};
 
 
 

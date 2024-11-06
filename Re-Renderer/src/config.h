@@ -4,6 +4,6 @@
 namespace Re_Renderer{
 
 	using EntID = std::uint32_t;
-	constexpr EntID NullEntID = 0;
+	inline EntID NullEntID = 0;
 
 }

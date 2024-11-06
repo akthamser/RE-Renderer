@@ -147,6 +147,7 @@
     <ClCompile Include="src\app.cpp" />
     <ClCompile Include="src\Dependencies\glad.c" />
     <ClCompile Include="src\Dependencies\stb_image.cpp" />
+    <ClCompile Include="src\Renderer\CameraSystem.cpp" />
     <ClCompile Include="src\Renderer\Mesh.cpp" />
     <ClCompile Include="src\Renderer\Entity.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\Dependencies\stb_image.h" />
+    <ClInclude Include="src\Renderer\CameraSystem.h" />
     <ClInclude Include="src\Renderer\Components.h" />
     <ClInclude Include="src\Renderer\ComponentsHandler.h" />
     <ClInclude Include="src\Renderer\Resources.h" />

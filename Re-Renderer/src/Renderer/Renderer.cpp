@@ -76,9 +76,19 @@ namespace Re_Renderer {
         for (auto& mesh : Meshes->getAllComponents()) {
             setupMesh(mesh);
         }
+
+        
+
+        if (scene.getActiveCamera() == nullptr)
+            std::cout << "WARNING :: Scene Have No Camera" << std::endl;
     }
 
     void Renderer::renderScene(Scene& scene) {
+
+        Components::Camera* activeCamera = scene.getActiveCamera();
+
+        if (activeCamera == nullptr)
+            return;
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -115,19 +125,11 @@ namespace Re_Renderer {
       
         
 
-            glm::mat4 view = glm::lookAt(
-                glm::vec3(0.0f, 0.0f, 3.0f),  // Camera position in world space
-                glm::vec3(0.0f, 0.0f, 0.0f),  // Target point in world space
-                glm::vec3(0.0f, 1.0f, 0.0f)   // Up direction
-            );
+          
+            glm::mat4 model = transform->getModel();
+            glm::mat4 view = activeCamera->getViewMatrix();
+            glm::mat4 projection = activeCamera->getProjectionMatrix();
 
-            glm::mat4 projection = glm::perspective(
-                glm::radians(45.0f),  // Field of view in radians
-                4.0f / 3.0f,          // Aspect ratio (width/height)
-                0.1f,                 // Near clipping plane
-                100.0f                // Far clipping plane
-            );
-            glm::mat4 model = transform->calculateModel();
 
             m_shader->setMat4("model", model);
             m_shader->setMat4("view", view);

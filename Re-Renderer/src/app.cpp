@@ -8,6 +8,7 @@
 #include"config.h"
 #include"Renderer/Resources.h"
 #include"Renderer/Timer.hpp"
+#include"Renderer/CameraSystem.h"
 
 using namespace Re_Renderer;
 int main(){
@@ -15,6 +16,8 @@ int main(){
 
         Window window = Window(800, 600, "Re-Renderer", false);
         Renderer renderer(window);
+        CameraSystem cameraSystem(window);
+
         glViewport(0, 0, window.Width, window.Height);
 
 
@@ -27,17 +30,23 @@ int main(){
            
             Timer timer("craeting 100000 entities");
             
-        for (int i = 0 ; i < 100 ; i++) {
+        
         auto entity = scene.CreateEntity();
         auto transform = entity.addComponent<Components::Transform>();
-        transform->Scale = glm::vec3(0.3f);
-        transform->Position.x = cos(0.01*i);
-        transform->Position.y = sin(0.01 * i);
-        transform->Position.z = cos(0.01 * i);
-        transform->Rotation.z = cos(0.01 * i);
+        transform->setScale(glm::vec3(0.3f));
+        transform->setPosition(0,  0 , 0);
+        transform->setRotation(0 , 0, 10); 
+
         entity.addComponent<Components::Mesh>(cubeMesh);
-        entity.addComponent<Components::Material>(ShaderType::Basic,glm::vec3(cos(i), sin(i), 0));
-        }
+        entity.addComponent<Components::Material>(ShaderType::Basic,glm::vec3(1, 1, 1));
+
+        
+         entity = scene.CreateEntity();
+         transform = entity.addComponent<Components::Transform>();
+        transform->setPosition(0, 0, 1);
+        transform->setRotation(0, 0, 0);
+
+        entity.addComponent<Components::Camera>();
 
 
         
@@ -60,6 +69,8 @@ int main(){
                 frameCount = 0;
             }
 
+
+            cameraSystem.UpdateCameras(scene);
             renderer.renderScene(scene);
 
 

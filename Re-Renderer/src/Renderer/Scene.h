@@ -9,6 +9,7 @@
 #include"ComponentRegistry.h"
 #include"ComponentsHandler.h"
 #include"Entity.h"
+#include"Components.h"
 
 
 namespace Re_Renderer {
@@ -31,10 +32,16 @@ namespace Re_Renderer {
 		void PrintHierarchy();
 		void PrintEntity(Entity* entity, int depth = 0);
 
+		Components::Camera* getActiveCamera() ;
+		void setActiveCamera(size_t i);
+
+
+
 		Entity* getEntityByID(const EntID& id);
 
 	private:
 		EntID currentID = 1;
+		size_t activeCamera = 0;
 
 
 	};
