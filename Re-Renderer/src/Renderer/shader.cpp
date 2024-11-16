@@ -29,6 +29,7 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile)
     checkCompileErrors(fragment, "FRAGMENT");
     
     ID = glCreateProgram();
+    std::cout << vertexFile <<"shadercreated  id = " << ID << std::endl;
     glAttachShader(ID, vertex);
     glAttachShader(ID, fragment);
     glLinkProgram(ID);
@@ -40,6 +41,7 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile)
 }
 
 Shader::~Shader() {
+    std::cout << "SHADER DELETED " << ID << std::endl;
     glDeleteProgram(ID);
 }
 

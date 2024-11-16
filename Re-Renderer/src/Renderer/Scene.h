@@ -10,7 +10,7 @@
 #include"ComponentsHandler.h"
 #include"Entity.h"
 #include"Components.h"
-
+#include"Model.h"
 
 namespace Re_Renderer {
 
@@ -25,7 +25,7 @@ namespace Re_Renderer {
 
 		ComponentsHandler Components;
 
-		Scene() = default;
+		Scene();
 		Entity& CreateEntity(std::string name = "", EntID parentID = 0);
 		void RemoveEntity(EntID entityID);
 		void makeChild(EntID id, EntID parentId);
@@ -35,7 +35,7 @@ namespace Re_Renderer {
 		Components::Camera* getActiveCamera() ;
 		void setActiveCamera(size_t i);
 
-
+		EntID CreateModel(const Model& model,EntID parentId = 0);
 
 		Entity* getEntityByID(const EntID& id);
 
@@ -44,6 +44,7 @@ namespace Re_Renderer {
 		size_t activeCamera = 0;
 
 
+		void CreateNode(const Node& node,const Model& model, EntID parentId);
 	};
 
 

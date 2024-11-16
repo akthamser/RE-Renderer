@@ -1,10 +1,12 @@
 #include"Scene.h"
 #include"ComponentsHandler.h"
-
+#include"Components.h"
 
 namespace Re_Renderer {
 
-
+Scene::Scene() {
+	Entities.reserve(1024);
+};
 Entity* Scene::getEntityByID(const EntID& id) {
 
 	auto it = EntityMap.find(id);
@@ -15,23 +17,12 @@ Entity* Scene::getEntityByID(const EntID& id) {
 }
 Entity& Scene::CreateEntity(std::string name , EntID parentID ) {
 
-	if (parentID != NullEntID)
-	{
-		Entity* parent = getEntityByID(parentID);
-		if (parent == nullptr) {
-			std::cout << "ERROR : CREATING ENTITY : Parent ID Not Found \n" << std::endl;
-			parentID = NullEntID;
-		}
-		else{
-			parent->addChild(currentID); // add the new Entity as a child in the Parent Entity
-		}
 
-	}
-
-	Entities.emplace_back(currentID,name==""? "Entity " + std::to_string(currentID) : name, parentID,this);
+	Entity& entity = Entities.emplace_back(currentID,name==""? "Entity " + std::to_string(currentID) : name, 0,this);
 	EntityMap[currentID] = Entities.size() - 1;
 	currentID++;
-	return Entities.back();
+	entity.setParentID(parentID);
+	return entity;
 };
 
 
@@ -118,6 +109,58 @@ void Scene::setActiveCamera(size_t i) {
 		activeCamera = i;
 	
 		
+
+};
+
+
+
+EntID Scene::CreateModel(const Model& model, EntID parentID ) {
+
+	if (model.nodes.size() == 0)
+		return 0;
+
+	const Node& root = model.nodes[0];
+
+	Entity& entity = CreateEntity(root.name, parentID);
+	entity.addComponent<Components::Transform>(); 
+
+	if (root.mesh != -1)
+		entity.addComponent<Components::Mesh>(model.meshes[root.mesh]);
+	if (root.material != -1)
+		entity.addComponent<Components::Material>(model.materials[root.material]);
+
+	EntID entId = entity.getID();
+
+	for (int i = 0; i < root.children.size(); i++) {
+
+		CreateNode(model.nodes[root.children[i]], model, entId);
+
+	}
+
+	return entId;
+
+};
+
+
+void Scene::CreateNode(const Node& node, const Model& model,EntID parentID) {
+	
+	Entity& entity = CreateEntity(node.name,parentID);
+	entity.addComponent<Components::Transform>();
+
+	if (node.mesh != -1)
+		entity.addComponent<Components::Mesh>(model.meshes[node.mesh]);
+	if(node.material != -1)
+		entity.addComponent<Components::Material>(model.materials[node.material]);
+
+	EntID entId = entity.getID(); 
+
+	for (int i = 0; i < node.children.size(); i++) {
+	
+	   CreateNode(model.nodes[node.children[i]],model, entId);
+
+	}
+
+
 
 };
 

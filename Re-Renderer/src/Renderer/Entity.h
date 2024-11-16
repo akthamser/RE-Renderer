@@ -33,6 +33,7 @@ namespace Re_Renderer {
 		const EntID& getChild(int i);
 		void addChild(EntID id);
 		void removeChild(const EntID& id);
+		void addIDToChildrenList(const EntID& id);
 
 		ComponentsHandler& componentsHundler();
 

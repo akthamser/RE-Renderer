@@ -8,7 +8,7 @@
 #include "ShaderType.h"
 #include<unordered_map>
 #include<string>
-
+#include"Texture.h"
 namespace Re_Renderer {
 
 
@@ -17,6 +17,9 @@ namespace Re_Renderer {
 		glm::vec3 Position;
 		glm::vec3 Normal;
 		glm::vec2 TexCoords;
+		glm::vec3 Tangent;     
+		glm::vec3 Bitangent;
+
 	};
 
 
@@ -115,14 +118,17 @@ namespace Re_Renderer {
 
 			glm::vec3 Color;
 
-			Material(ShaderType shaderType,
-				glm::vec3 color = glm::vec3(1)
-				)
-				: shaderType(shaderType), 
-				Color(color)
+			Texture* Ambient;
+			Texture* Diffuse;       // Diffuse texture
+			Texture* NormalMap;     // Normal map
+			Texture* SpecularMap;   // Specular map
 
-			{
-			}
+
+
+			Material(ShaderType shaderType, glm::vec3 color = glm::vec3(1))
+				: shaderType(shaderType), Color(color), Ambient(nullptr), Diffuse(nullptr), NormalMap(nullptr),
+				SpecularMap(nullptr)
+			{}
 
 		};
 

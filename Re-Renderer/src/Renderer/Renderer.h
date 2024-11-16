@@ -19,6 +19,7 @@ namespace Re_Renderer {
 		OpenGlMesh() = default;
 	};
 	
+	class AssetsManager;
 
 	class Renderer {
 
@@ -29,6 +30,7 @@ namespace Re_Renderer {
 
 		void setupScene(Scene& scene);
 		void renderScene(Scene& scene);
+		void setupTextures(AssetsManager& assetsManager);
 
 
 	private:
@@ -36,6 +38,8 @@ namespace Re_Renderer {
 		Window& m_window;
 		std::vector<Shader> m_Shaders;
 		std::unordered_map<Components::Mesh*, OpenGlMesh> m_OpenGlMeshes;
+		std::unordered_map<Texture*, GLuint> m_Textures;
+
 		ShaderType activeShader = ShaderType::Count; // using Count as Null
 		Shader* m_shader = nullptr;
 
@@ -43,6 +47,8 @@ namespace Re_Renderer {
 		Shader* getShader(ShaderType shadertype);
 		void setupMesh(Components::Mesh& mesh);
 		void setMaterialUniforms(const Components::Material& material,const Shader& shader);
+		GLuint generateTexture(const Texture* texture);
+		void bindTexture(Texture* texture, int textureUnit, const std::string& uniformName, const Shader& shader);
 
 	};
 

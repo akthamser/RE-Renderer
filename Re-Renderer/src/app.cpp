@@ -9,6 +9,9 @@
 #include"Renderer/Resources.h"
 #include"Renderer/Timer.hpp"
 #include"Renderer/CameraSystem.h"
+#include"Renderer/AssetsManager.h"
+#include"Renderer/Model.h"
+
 
 using namespace Re_Renderer;
 int main(){
@@ -17,6 +20,7 @@ int main(){
         Window window = Window(800, 600, "Re-Renderer", false);
         Renderer renderer(window);
         CameraSystem cameraSystem(window);
+        AssetsManager assetManager;
 
         glViewport(0, 0, window.Width, window.Height);
 
@@ -26,35 +30,33 @@ int main(){
         double previousTime = glfwGetTime();
         int frameCount = 0;
         Scene scene;
-        {
+        
            
-            Timer timer("craeting 100000 entities");
             
-        
-        auto entity = scene.CreateEntity();
-        auto transform = entity.addComponent<Components::Transform>();
-        transform->setScale(glm::vec3(0.3f));
-        transform->setPosition(0,  0 , 0);
-        transform->setRotation(0 , 0, 10); 
+            
+            Model& model = assetManager.loadModel("./Assets/backpack/backpack.obj",true);
+            EntID backbackID = scene.CreateModel(model);
 
-        entity.addComponent<Components::Mesh>(cubeMesh);
-        entity.addComponent<Components::Material>(ShaderType::Basic,glm::vec3(1, 1, 1));
+
+
+       
 
         
-         entity = scene.CreateEntity();
-         transform = entity.addComponent<Components::Transform>();
-        transform->setPosition(0, 0, 1);
-        transform->setRotation(0, 0, 0);
+         auto entity = scene.CreateEntity();
+         auto transform = entity.addComponent<Components::Transform>();
+        transform->setPosition(7, 0, 0);
+        transform->setRotation(0, 90, 0);
 
         entity.addComponent<Components::Camera>();
 
 
         
-        }
-
+        
+        scene.PrintHierarchy();
+        renderer.setupTextures(assetManager);
         renderer.setupScene(scene);
 
-        
+
 
         while (!window.ShouldClose())
         {
@@ -69,7 +71,7 @@ int main(){
                 frameCount = 0;
             }
 
-
+ 
             cameraSystem.UpdateCameras(scene);
             renderer.renderScene(scene);
 

@@ -11,14 +11,14 @@ namespace Re_Renderer {
         //vertices
         {
             // Positions           // Normals           // Texture Coords
-            { glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(0.0f, 0.0f) }, // Back bottom left
-            { glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(1.0f, 0.0f) }, // Back bottom right
-            { glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(1.0f, 1.0f) }, // Back top right
-            { glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(0.0f, 1.0f) }, // Back top left
-            { glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(0.0f, 0.0f) }, // Front bottom left
-            { glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f) }, // Front bottom right
-            { glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f) }, // Front top right
-            { glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0f) }  // Front top left
+            { glm::vec3(-0.5f, -0.5f, -0.5f),glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(0.0f, 0.0f),glm::vec3(0.0f, 0.0f, -1.0f),glm::vec3(0.0f, 0.0f, -1.0f)  },// Back bottom left
+            { glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(1.0f, 0.0f),glm::vec3(0.0f, 0.0f, -1.0f),glm::vec3(0.0f, 0.0f, -1.0f)  },// Back bottom right
+            { glm::vec3(0.5f, 0.5f, -0.5f),  glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(1.0f, 1.0f),glm::vec3(0.0f, 0.0f, -1.0f),glm::vec3(0.0f, 0.0f, -1.0f)  },// Back top right
+            { glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(0.0f, 1.0f),glm::vec3(0.0f, 0.0f, -1.0f),glm::vec3(0.0f, 0.0f, -1.0f)  },// Back top left
+            { glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(0.0f, 0.0f) , glm::vec3(0.0f, 0.0f, -1.0f),glm::vec3(0.0f, 0.0f, -1.0f)} ,// Front bottom left
+            { glm::vec3(0.5f, -0.5f, 0.5f),  glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 0.0f) , glm::vec3(0.0f, 0.0f, -1.0f),glm::vec3(0.0f, 0.0f, -1.0f)} ,// Front bottom right
+            { glm::vec3(0.5f, 0.5f, 0.5f),   glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f) , glm::vec3(0.0f, 0.0f, -1.0f),glm::vec3(0.0f, 0.0f, -1.0f)} ,// Front top right
+            { glm::vec3(-0.5f, 0.5f, 0.5f),  glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0f) ,  glm::vec3(0.0f, 0.0f, -1.0f),glm::vec3(0.0f, 0.0f, -1.0f)} // Front top left
         },
         //indices
         {

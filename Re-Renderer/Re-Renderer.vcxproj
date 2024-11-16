@@ -148,13 +148,15 @@
     <ClCompile Include="src\Dependencies\glad.c" />
     <ClCompile Include="src\Dependencies\stb_image.cpp" />
     <ClCompile Include="src\Renderer\CameraSystem.cpp" />
-    <ClCompile Include="src\Renderer\Mesh.cpp" />
     <ClCompile Include="src\Renderer\Entity.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Renderer\AssetsManager.cpp" />
     <ClCompile Include="src\Renderer\Scene.cpp" />
     <ClCompile Include="src\Renderer\shader.cpp" />
     <ClCompile Include="src\Renderer\Window.cpp" />
     <ClCompile Include="src\ScreenRecorder.cpp" />
+    <ClCompile Include="src\Utils\ModelLoader.cpp" />
+    <ClCompile Include="src\Utils\TextureLoader.cpp" />
     <ClCompile Include="src\Utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -163,21 +165,27 @@
     <ClInclude Include="src\Renderer\CameraSystem.h" />
     <ClInclude Include="src\Renderer\Components.h" />
     <ClInclude Include="src\Renderer\ComponentsHandler.h" />
+    <ClInclude Include="src\Renderer\Model.h" />
     <ClInclude Include="src\Renderer\Resources.h" />
-    <ClInclude Include="src\Renderer\Mesh.h" />
     <ClInclude Include="src\Renderer\Entity.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
+    <ClInclude Include="src\Renderer\AssetsManager.h" />
     <ClInclude Include="src\Renderer\Scene.h" />
     <ClInclude Include="src\Renderer\shader.h" />
     <ClInclude Include="src\Renderer\ComponentRegistry.h" />
     <ClInclude Include="src\Renderer\ShaderType.h" />
+    <ClInclude Include="src\Renderer\Texture.h" />
     <ClInclude Include="src\Renderer\Timer.hpp" />
     <ClInclude Include="src\Renderer\Window.h" />
     <ClInclude Include="src\ScreenRecorder.h" />
+    <ClInclude Include="src\Utils\ModelLoader.h" />
+    <ClInclude Include="src\Utils\TextureLoader.h" />
     <ClInclude Include="src\Utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\Renderer\Shaders\fragmentShader - Copy.frag" />
     <None Include="src\Renderer\Shaders\fragmentShader.frag" />
+    <None Include="src\Renderer\Shaders\vertexShader - Copy.vert" />
     <None Include="src\Renderer\Shaders\vertexShader.vert" />
   </ItemGroup>
   <ItemGroup>

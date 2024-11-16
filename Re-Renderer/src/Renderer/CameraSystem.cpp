@@ -11,6 +11,10 @@ namespace Re_Renderer {
 
 		void CameraSystem::UpdateCameras(Scene& scene) {
 
+
+		
+
+
 			std::shared_ptr<ComponentRegistry<Components::Camera>> CamerasRegestry = scene.Components.getRegistry<Components::Camera>(); 
 			std::shared_ptr<ComponentRegistry<Components::Transform>> TransfromRegestry = scene.Components.getRegistry<Components::Transform>();
 
@@ -27,8 +31,9 @@ namespace Re_Renderer {
 				}
 
 				float ratio = (float)m_window.Width / m_window.Height;
+
 				if (ratio != camera->getAspectRatio()) {
-					std::cout << "ratio changed to :" << ratio << std::endl;
+
 					camera->setAspectRatio(ratio);
 				}
 
