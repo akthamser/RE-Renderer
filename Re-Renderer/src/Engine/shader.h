@@ -4,7 +4,7 @@
 #include"../Utils/Utils.h"
 
 
-constexpr const char* SHADER_PATH = "./src/Renderer/Shaders/";
+constexpr const char* SHADER_PATH = "./src/Engine/Shaders/";
 
 class Shader
 {

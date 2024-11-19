@@ -1,6 +1,6 @@
 #include"ModelLoader.h"
-#include"../Renderer/ShaderType.h"
-#include"../Renderer/AssetsManager.h"
+#include"../Engine/ShaderType.h"
+#include"../engine/AssetsManager.h"
 
 namespace Re_Renderer{
 

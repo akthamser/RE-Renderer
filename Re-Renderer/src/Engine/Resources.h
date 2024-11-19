@@ -1,7 +1,7 @@
 #pragma once
 #include<glm/glm.hpp>
 #include<vector>
-#include"Components.h"
+#include"Components/Components.h"
 
 namespace Re_Renderer {
 

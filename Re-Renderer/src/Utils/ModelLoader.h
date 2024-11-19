@@ -1,10 +1,10 @@
 #pragma once
-#include"../Renderer/Entity.h"
-#include"../Renderer/Scene.h"
+#include"../Engine/Scene/Entity.h"
+#include"../engine/Scene/Scene.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include"../Renderer/Model.h"
+#include"../engine/Model.h"
 #include<iostream>
 #include"../Dependencies/stb_image.h"
 

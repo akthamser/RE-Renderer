@@ -2,9 +2,9 @@
 #include<iostream>
 #include<vector>
 #include<string>
-#include"../config.h"
-#include"ComponentRegistry.h"
-#include"ComponentsHandler.h"
+#include"../../config.h"
+#include"../ComponentRegistry.h"
+#include"../ComponentsHandler.h"
 
 
 
@@ -26,10 +26,10 @@ namespace Re_Renderer {
 		const EntID& getID() const;
 		void setID(EntID& id);
 
-		const EntID& getParentID() const;
+		const EntID& getParentID() ;
 		void setParentID(EntID& parentId);
 
-		const std::vector<EntID>& getChildrenIDs() const;
+		const std::vector<EntID>& getChildrenIDs() ;
 		const EntID& getChild(int i);
 		void addChild(EntID id);
 		void removeChild(const EntID& id);
@@ -50,8 +50,7 @@ namespace Re_Renderer {
 		friend std::ostream& operator<<(std::ostream& os, const Entity& entity);
 	private:
 		std::string m_Name;
-		EntID m_ID, m_ParentID;
-		std::vector<EntID> m_ChildrenIDs;
+		EntID m_ID;
 		Scene* m_Scene;
 	};
 

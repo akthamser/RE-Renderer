@@ -1,16 +1,16 @@
 #include<iostream>
 
-#include"Renderer/shader.h"
-#include"Renderer/Window.h"
-#include"Renderer/Renderer.h"
+#include"Engine/shader.h"
+#include"Engine/Window.h"
+#include"Engine/Renderer.h"
 #include"ScreenRecorder.h"
-#include"Renderer/Scene.h"
+#include"Engine/Scene/Scene.h"
 #include"config.h"
-#include"Renderer/Resources.h"
-#include"Renderer/Timer.hpp"
-#include"Renderer/CameraSystem.h"
-#include"Renderer/AssetsManager.h"
-#include"Renderer/Model.h"
+#include"Engine/Resources.h"
+#include"Engine/Timer.hpp"
+#include"Engine/CameraSystem.h"
+#include"Engine/AssetsManager.h"
+#include"Engine/Model.h"
 
 
 using namespace Re_Renderer;
@@ -34,7 +34,7 @@ int main(){
            
             
             
-            Model& model = assetManager.loadModel("./Assets/backpack/backpack.obj",true);
+            Model& model = assetManager.loadModel("./Assets/Skull/12140_Skull_v3_L2.obj",false);
             EntID backbackID = scene.CreateModel(model);
 
 
@@ -43,9 +43,9 @@ int main(){
 
         
          auto entity = scene.CreateEntity();
-         auto transform = entity.addComponent<Components::Transform>();
-        transform->setPosition(7, 0, 0);
-        transform->setRotation(0, 90, 0);
+         auto transform = entity.getComponent<Components::Transform>();
+        transform->setPosition(0, -50, 010);
+        transform->setRotation(90, 0, 0);
 
         entity.addComponent<Components::Camera>();
 

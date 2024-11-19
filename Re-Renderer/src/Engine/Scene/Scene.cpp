@@ -1,6 +1,7 @@
 #include"Scene.h"
-#include"ComponentsHandler.h"
-#include"Components.h"
+#include"../ComponentsHandler.h"
+
+
 
 namespace Re_Renderer {
 
@@ -18,10 +19,9 @@ Entity* Scene::getEntityByID(const EntID& id) {
 Entity& Scene::CreateEntity(std::string name , EntID parentID ) {
 
 
-	Entity& entity = Entities.emplace_back(currentID,name==""? "Entity " + std::to_string(currentID) : name, 0,this);
+	Entity& entity = Entities.emplace_back(currentID,name==""? "Entity " + std::to_string(currentID) : name, parentID,this);
 	EntityMap[currentID] = Entities.size() - 1;
 	currentID++;
-	entity.setParentID(parentID);
 	return entity;
 };
 
@@ -42,32 +42,6 @@ void Scene::RemoveEntity(EntID entityID) {
 	EntityMap.erase(entityID);
 };
 
-void Scene::makeChild(EntID id, EntID parentId) {
-	
-	auto it = EntityMap.find(id);
-	if (it == EntityMap.end())
-		return;
-
-	int index = it->second;
-
-	it = EntityMap.find(parentId);
-	if (parentId != NullEntID && it==EntityMap.end())
-		return;
-
-
-
-	int currentParentId = Entities[index].getParentID();
-	if (currentParentId != NullEntID)
-	{
-		Entities[EntityMap[currentParentId]].removeChild(id);
-
-	}
-
-	Entities[index].setParentID(parentId);
-	if(parentId != NullEntID)
-	Entities[it->second].addChild(id);
-	
-}
 
 void Scene::PrintHierarchy() {
 	
@@ -79,7 +53,7 @@ void Scene::PrintHierarchy() {
 			PrintEntity(&entity);
 			
 		}	
-	}
+	} 
 }
 
 void Scene::PrintEntity(Entity* entity, int depth) {
@@ -122,7 +96,6 @@ EntID Scene::CreateModel(const Model& model, EntID parentID ) {
 	const Node& root = model.nodes[0];
 
 	Entity& entity = CreateEntity(root.name, parentID);
-	entity.addComponent<Components::Transform>(); 
 
 	if (root.mesh != -1)
 		entity.addComponent<Components::Mesh>(model.meshes[root.mesh]);
@@ -145,7 +118,6 @@ EntID Scene::CreateModel(const Model& model, EntID parentID ) {
 void Scene::CreateNode(const Node& node, const Model& model,EntID parentID) {
 	
 	Entity& entity = CreateEntity(node.name,parentID);
-	entity.addComponent<Components::Transform>();
 
 	if (node.mesh != -1)
 		entity.addComponent<Components::Mesh>(model.meshes[node.mesh]);

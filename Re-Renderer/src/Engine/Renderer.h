@@ -7,8 +7,8 @@
 #include<vector>
 #include<string>
 #include"../Dependencies/stb_image.h"
-#include"Scene.h"
-#include"Components.h"
+#include"Scene/Scene.h"
+#include"Components/Components.h"
 
 namespace Re_Renderer {
 

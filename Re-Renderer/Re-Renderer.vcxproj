@@ -147,13 +147,13 @@
     <ClCompile Include="src\app.cpp" />
     <ClCompile Include="src\Dependencies\glad.c" />
     <ClCompile Include="src\Dependencies\stb_image.cpp" />
-    <ClCompile Include="src\Renderer\CameraSystem.cpp" />
-    <ClCompile Include="src\Renderer\Entity.cpp" />
-    <ClCompile Include="src\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Renderer\AssetsManager.cpp" />
-    <ClCompile Include="src\Renderer\Scene.cpp" />
-    <ClCompile Include="src\Renderer\shader.cpp" />
-    <ClCompile Include="src\Renderer\Window.cpp" />
+    <ClCompile Include="src\Engine\CameraSystem.cpp" />
+    <ClCompile Include="src\Engine\Scene\Entity.cpp" />
+    <ClCompile Include="src\Engine\Renderer.cpp" />
+    <ClCompile Include="src\Engine\AssetsManager.cpp" />
+    <ClCompile Include="src\Engine\Scene\Scene.cpp" />
+    <ClCompile Include="src\Engine\shader.cpp" />
+    <ClCompile Include="src\Engine\Window.cpp" />
     <ClCompile Include="src\ScreenRecorder.cpp" />
     <ClCompile Include="src\Utils\ModelLoader.cpp" />
     <ClCompile Include="src\Utils\TextureLoader.cpp" />
@@ -162,31 +162,35 @@
   <ItemGroup>
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\Dependencies\stb_image.h" />
-    <ClInclude Include="src\Renderer\CameraSystem.h" />
-    <ClInclude Include="src\Renderer\Components.h" />
-    <ClInclude Include="src\Renderer\ComponentsHandler.h" />
-    <ClInclude Include="src\Renderer\Model.h" />
-    <ClInclude Include="src\Renderer\Resources.h" />
-    <ClInclude Include="src\Renderer\Entity.h" />
-    <ClInclude Include="src\Renderer\Renderer.h" />
-    <ClInclude Include="src\Renderer\AssetsManager.h" />
-    <ClInclude Include="src\Renderer\Scene.h" />
-    <ClInclude Include="src\Renderer\shader.h" />
-    <ClInclude Include="src\Renderer\ComponentRegistry.h" />
-    <ClInclude Include="src\Renderer\ShaderType.h" />
-    <ClInclude Include="src\Renderer\Texture.h" />
-    <ClInclude Include="src\Renderer\Timer.hpp" />
-    <ClInclude Include="src\Renderer\Window.h" />
+    <ClInclude Include="src\Engine\CameraSystem.h" />
+    <ClInclude Include="src\Engine\Components\CameraComponent.h" />
+    <ClInclude Include="src\Engine\Components\Components.h" />
+    <ClInclude Include="src\Engine\ComponentsHandler.h" />
+    <ClInclude Include="src\Engine\Components\MaterialComponent.h" />
+    <ClInclude Include="src\Engine\Components\MeshComponent.h" />
+    <ClInclude Include="src\Engine\Components\TransformComponent.h" />
+    <ClInclude Include="src\Engine\Model.h" />
+    <ClInclude Include="src\Engine\Resources.h" />
+    <ClInclude Include="src\Engine\Scene\Entity.h" />
+    <ClInclude Include="src\Engine\Renderer.h" />
+    <ClInclude Include="src\Engine\AssetsManager.h" />
+    <ClInclude Include="src\Engine\Scene\Scene.h" />
+    <ClInclude Include="src\Engine\shader.h" />
+    <ClInclude Include="src\Engine\ComponentRegistry.h" />
+    <ClInclude Include="src\Engine\ShaderType.h" />
+    <ClInclude Include="src\Engine\Texture.h" />
+    <ClInclude Include="src\Engine\Timer.hpp" />
+    <ClInclude Include="src\Engine\Window.h" />
     <ClInclude Include="src\ScreenRecorder.h" />
     <ClInclude Include="src\Utils\ModelLoader.h" />
     <ClInclude Include="src\Utils\TextureLoader.h" />
     <ClInclude Include="src\Utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\Renderer\Shaders\fragmentShader - Copy.frag" />
-    <None Include="src\Renderer\Shaders\fragmentShader.frag" />
-    <None Include="src\Renderer\Shaders\vertexShader - Copy.vert" />
-    <None Include="src\Renderer\Shaders\vertexShader.vert" />
+    <None Include="src\Engine\Shaders\fragmentShader - Copy.frag" />
+    <None Include="src\Engine\Shaders\fragmentShader.frag" />
+    <None Include="src\Engine\Shaders\vertexShader - Copy.vert" />
+    <None Include="src\Engine\Shaders\vertexShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="src\Resources\skybox\bluecloud_bk.jpg" />

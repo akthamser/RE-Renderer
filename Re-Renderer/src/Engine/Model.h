@@ -1,6 +1,6 @@
 #pragma once
-#include"Components.h"
-#include"Entity.h"
+#include"Components/Components.h"
+#include"Scene/Entity.h"
 
 
 

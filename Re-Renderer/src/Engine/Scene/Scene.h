@@ -4,17 +4,17 @@
 #include<unordered_map>
 #include<memory>
 #include<iostream>
-#include"../config.h"
+#include"../../config.h"
 #include<optional>
-#include"ComponentRegistry.h"
-#include"ComponentsHandler.h"
+#include"../ComponentRegistry.h"
+#include"../ComponentsHandler.h"
 #include"Entity.h"
-#include"Components.h"
-#include"Model.h"
+#include"../Model.h"
+#include"../Components/Components.h"
 
 namespace Re_Renderer {
 
-
+	
 
 	class Scene {
 
@@ -28,7 +28,7 @@ namespace Re_Renderer {
 		Scene();
 		Entity& CreateEntity(std::string name = "", EntID parentID = 0);
 		void RemoveEntity(EntID entityID);
-		void makeChild(EntID id, EntID parentId);
+
 		void PrintHierarchy();
 		void PrintEntity(Entity* entity, int depth = 0);
 
