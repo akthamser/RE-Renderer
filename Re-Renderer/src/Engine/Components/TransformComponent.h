@@ -7,7 +7,7 @@
 #include <glm/gtc/constants.hpp> 
 #include<string>
 #include"Components.h"
-
+#include"../../Utils/bitmask.h"
 #include"../../config.h"
 
 
@@ -20,41 +20,65 @@ namespace Re_Renderer {
 
 		
 		struct Transform  {
+			
+			enum  Flags {
+				NONE = 0,
+				LOCAL_POS_DIRTY = 1 << 0,  // if local position does not equal positon of last frame
+				LOCAL_ROT_DIRTY = 1 << 1,   // if local rotation does not equal positon of last frame
+				LOCAL_SCALE_DIRTY = 1 << 2,   // if local scale does not equal positon of last frame
 
+				GLOBAL_POS_DIRTY = 1 << 3,  // if GLOBAL position does not equal positon of last frame
+				GLOBAL_ROT_DIRTY = 1 << 4,   // if GLOBAL rotation does not equal positon of last frame
+				GLOBAL_SCALE_DIRTY = 1 << 5,   // if GLOBAL scale does not equal positon of last frame
+
+			};
 
 			Transform() = delete;
-			//Transform(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale,EntID parentId) : m_LocalPosition(position), m_LocalRotation(glm::radians(rotation)), m_LocalScale(scale) , m_ParentID(parentId) {};
-			//Transform(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale) : m_LocalPosition(position), m_LocalRotation(glm::radians(rotation)), m_LocalScale(scale) {};
 			Transform(EntID parentId): m_ParentID(parentId) {};
 
-			bool isDirty = true;
+
+			Bitmask flags;
 
 			glm::vec3 getPosition() const { return m_LocalPosition; };
 			glm::vec3 getRotation() const { return m_LocalRotation; };
 			glm::vec3 getScale() const { return m_LocalScale; };
 
 			void setPosition(glm::vec3 pos) {
+				m_GlobalPosition = m_GlobalPosition - m_LocalPosition + pos; 
 				m_LocalPosition = pos;
+				flags.set(Flags::LOCAL_POS_DIRTY | Flags::GLOBAL_POS_DIRTY); 
 				updateModel();
 			};
 			void setRotation(glm::vec3 rot) {
-				m_LocalRotation = rot;
+				m_GlobalRotation = m_GlobalRotation - m_LocalRotation + glm::radians(rot);
+				m_LocalRotation = glm::radians(rot);
+				flags.set(Flags::LOCAL_ROT_DIRTY | Flags::GLOBAL_ROT_DIRTY); 
 				updateModel();
 			};
 			void  setScale(glm::vec3 scale) {
+				m_GlobalScale = m_GlobalScale - m_LocalScale + scale;
 				m_LocalScale = scale;
+				flags.set(Flags::LOCAL_SCALE_DIRTY | Flags::GLOBAL_SCALE_DIRTY);
 				updateModel();
 			};
 			void setPosition(float x, float y, float z) {
+				m_GlobalPosition = m_GlobalPosition - m_LocalPosition + glm::vec3(x, y, z);
 				m_LocalPosition = glm::vec3(x, y, z);
+				flags.set(Flags::LOCAL_POS_DIRTY | Flags::GLOBAL_POS_DIRTY);
 				updateModel();
 			};
 			void setRotation(float x, float y, float z) {
+				m_GlobalRotation = m_GlobalRotation - m_LocalRotation + glm::radians(glm::vec3(x, y, z));
 				m_LocalRotation = glm::radians(glm::vec3(x, y, z));
+
+				flags.set(Flags::LOCAL_ROT_DIRTY | Flags::GLOBAL_ROT_DIRTY);
+
 				updateModel();
 			};
 			void  setScale(float x, float y, float z) {
+				m_GlobalScale = m_GlobalScale - m_LocalScale + glm::vec3(x, y, z); 
 				m_LocalScale = glm::vec3(x, y, z);
+				flags.set(Flags::LOCAL_SCALE_DIRTY | Flags::GLOBAL_SCALE_DIRTY);
 				updateModel();
 			};
 
@@ -65,13 +89,14 @@ namespace Re_Renderer {
 			glm::mat4 updateModel() {
 
 
-				glm::mat4 rot = glm::toMat4(glm::quat(m_LocalRotation));
+				glm::mat4 rot = glm::toMat4(glm::quat(m_GlobalRotation));
 
-				m_Model = glm::translate(glm::mat4(1), m_LocalPosition)
+				m_Model = glm::translate(glm::mat4(1), m_GlobalPosition)
 					* rot
-					* glm::scale(glm::mat4(1), m_LocalScale);
+					* glm::scale(glm::mat4(1), m_GlobalScale);
 
-				isDirty = true;
+	
+				
 				return m_Model;
 			}
 
