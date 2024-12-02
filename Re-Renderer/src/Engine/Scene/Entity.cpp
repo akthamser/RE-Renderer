@@ -9,7 +9,9 @@ namespace Re_Renderer {
 Entity::Entity(EntID id, std::string name, EntID parentID, Scene* scene)
 	:m_ID(id), m_Name(name),m_Scene(scene)
 {
-	addComponent<Components::Transform>(parentID);
+	addComponent<Components::Transform>();
+	setParentID(parentID);
+
 }
 
 

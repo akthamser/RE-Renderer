@@ -24,7 +24,7 @@ namespace Re_Renderer {
 				auto camera = CamerasRegestry->getComponent(entityId);
 				auto transfrom = TransfromRegestry->getComponent(entityId);
 
-				if (transfrom->isDirty) {
+				if (transfrom->isDirty()) {
 	
 					camera->updateViewMatrix(transfrom->getPosition(),transfrom->getRotation());
 					

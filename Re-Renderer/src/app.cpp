@@ -11,7 +11,7 @@
 #include"Engine/CameraSystem.h"
 #include"Engine/AssetsManager.h"
 #include"Engine/Model.h"
-
+#include"Engine/HierarchySystem.h"
 
 using namespace Re_Renderer;
 int main(){
@@ -21,6 +21,7 @@ int main(){
         Renderer renderer(window);
         CameraSystem cameraSystem(window);
         AssetsManager assetManager;
+        HierarchySystem hierarchySystem;
 
         glViewport(0, 0, window.Width, window.Height);
 
@@ -35,8 +36,8 @@ int main(){
             
             
             Model& model = assetManager.loadModel("./Assets/Skull/12140_Skull_v3_L2.obj",false);
-            EntID backbackID = scene.CreateModel(model);
-
+            EntID skullid = scene.CreateModel(model);
+            auto t = scene.getEntityByID(1)->getComponent<Components::Transform>();
 
 
        
@@ -71,7 +72,10 @@ int main(){
                 frameCount = 0;
             }
 
- 
+            t->setPosition(t->getPosition().x, t->getPosition().y - 0.001 * sin(glfwGetTime()) , t->getPosition().z - 0.001 * sin(glfwGetTime()));
+
+
+            hierarchySystem.UpdateGlobalTransforms(scene);
             cameraSystem.UpdateCameras(scene);
             renderer.renderScene(scene);
 

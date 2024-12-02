@@ -33,15 +33,18 @@ namespace Re_Renderer {
 
 			};
 
-			Transform() = delete;
-			Transform(EntID parentId): m_ParentID(parentId) {};
+			Transform() = default;
 
 
 			Bitmask flags;
 
-			glm::vec3 getPosition() const { return m_LocalPosition; };
-			glm::vec3 getRotation() const { return m_LocalRotation; };
-			glm::vec3 getScale() const { return m_LocalScale; };
+			glm::vec3 getLocalPosition() const { return m_LocalPosition; };
+			glm::vec3 getlocalRotation() const { return m_LocalRotation; };
+			glm::vec3 getLocalScale() const { return m_LocalScale; };
+
+			glm::vec3 getPosition() const { return m_GlobalPosition; };
+			glm::vec3 getRotation() const { return m_GlobalRotation; };
+			glm::vec3 getScale() const { return m_GlobalScale; };
 
 			void setPosition(glm::vec3 pos) {
 				m_GlobalPosition = m_GlobalPosition - m_LocalPosition + pos; 
@@ -56,7 +59,7 @@ namespace Re_Renderer {
 				updateModel();
 			};
 			void  setScale(glm::vec3 scale) {
-				m_GlobalScale = m_GlobalScale - m_LocalScale + scale;
+				m_GlobalScale = m_GlobalScale / m_LocalScale * scale;
 				m_LocalScale = scale;
 				flags.set(Flags::LOCAL_SCALE_DIRTY | Flags::GLOBAL_SCALE_DIRTY);
 				updateModel();
@@ -76,7 +79,7 @@ namespace Re_Renderer {
 				updateModel();
 			};
 			void  setScale(float x, float y, float z) {
-				m_GlobalScale = m_GlobalScale - m_LocalScale + glm::vec3(x, y, z); 
+				m_GlobalScale = m_GlobalScale / m_LocalScale * glm::vec3(x, y, z); 
 				m_LocalScale = glm::vec3(x, y, z);
 				flags.set(Flags::LOCAL_SCALE_DIRTY | Flags::GLOBAL_SCALE_DIRTY);
 				updateModel();
@@ -100,13 +103,33 @@ namespace Re_Renderer {
 				return m_Model;
 			}
 
+			void updateGlobalPos(glm::vec3 parentPos) {
+				m_GlobalPosition = parentPos + m_LocalPosition;
+				flags.set( Flags::GLOBAL_POS_DIRTY); 
+			}
+			void updateGlobalRot(glm::vec3 parentRot) {
+				m_GlobalRotation = parentRot + m_LocalRotation;
+				flags.set( Flags::GLOBAL_ROT_DIRTY);
+			}
+			void updateGlobalScale(glm::vec3 parentScale) {
+				m_GlobalScale = parentScale * m_LocalScale;
+				flags.set(Flags::GLOBAL_SCALE_DIRTY);
+			}
 
-
-
-			
+			bool isDirty()
+			{
+				return flags.isSet(Components::Transform::Flags::GLOBAL_POS_DIRTY)
+					|| flags.isSet(Components::Transform::Flags::GLOBAL_ROT_DIRTY)
+					|| flags.isSet(Components::Transform::Flags::GLOBAL_SCALE_DIRTY)
+					|| flags.isSet(Components::Transform::Flags::LOCAL_POS_DIRTY)
+					|| flags.isSet(Components::Transform::Flags::LOCAL_ROT_DIRTY)
+					|| flags.isSet(Components::Transform::Flags::LOCAL_SCALE_DIRTY);
+			}
 
 			EntID  m_ParentID = NullEntID;
 			std::vector<EntID> m_ChildrenIDs;
+			
+
 
 		private:
 			glm::vec3 m_LocalPosition = glm::vec3(0); 

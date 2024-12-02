@@ -148,6 +148,7 @@
     <ClCompile Include="src\Dependencies\glad.c" />
     <ClCompile Include="src\Dependencies\stb_image.cpp" />
     <ClCompile Include="src\Engine\CameraSystem.cpp" />
+    <ClCompile Include="src\Engine\HierarchySystem.cpp" />
     <ClCompile Include="src\Engine\Scene\Entity.cpp" />
     <ClCompile Include="src\Engine\Renderer.cpp" />
     <ClCompile Include="src\Engine\AssetsManager.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="src\Engine\Components\MaterialComponent.h" />
     <ClInclude Include="src\Engine\Components\MeshComponent.h" />
     <ClInclude Include="src\Engine\Components\TransformComponent.h" />
+    <ClInclude Include="src\Engine\HierarchySystem.h" />
     <ClInclude Include="src\Engine\Model.h" />
     <ClInclude Include="src\Engine\Resources.h" />
     <ClInclude Include="src\Engine\Scene\Entity.h" />
@@ -182,6 +184,7 @@
     <ClInclude Include="src\Engine\Timer.hpp" />
     <ClInclude Include="src\Engine\Window.h" />
     <ClInclude Include="src\ScreenRecorder.h" />
+    <ClInclude Include="src\Utils\bitmask.h" />
     <ClInclude Include="src\Utils\ModelLoader.h" />
     <ClInclude Include="src\Utils\TextureLoader.h" />
     <ClInclude Include="src\Utils\Utils.h" />
