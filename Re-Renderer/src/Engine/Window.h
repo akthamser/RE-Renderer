@@ -13,6 +13,7 @@ public :
 	bool ShouldClose();
 	void SwapBuffers();
 	void MakeContextCurrent();
+	GLFWwindow* getGLFWwindow();
 
 private:
 	GLFWwindow* m_window;

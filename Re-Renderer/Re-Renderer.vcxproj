@@ -149,6 +149,7 @@
     <ClCompile Include="src\Dependencies\stb_image.cpp" />
     <ClCompile Include="src\Engine\CameraSystem.cpp" />
     <ClCompile Include="src\Engine\HierarchySystem.cpp" />
+    <ClCompile Include="src\Engine\MovmentControllerSystem.cpp" />
     <ClCompile Include="src\Engine\Scene\Entity.cpp" />
     <ClCompile Include="src\Engine\Renderer.cpp" />
     <ClCompile Include="src\Engine\AssetsManager.cpp" />
@@ -169,9 +170,11 @@
     <ClInclude Include="src\Engine\ComponentsHandler.h" />
     <ClInclude Include="src\Engine\Components\MaterialComponent.h" />
     <ClInclude Include="src\Engine\Components\MeshComponent.h" />
+    <ClInclude Include="src\Engine\Components\MovmentControllerComponent.h" />
     <ClInclude Include="src\Engine\Components\TransformComponent.h" />
     <ClInclude Include="src\Engine\HierarchySystem.h" />
     <ClInclude Include="src\Engine\Model.h" />
+    <ClInclude Include="src\Engine\MovmentControllerSystem.h" />
     <ClInclude Include="src\Engine\Resources.h" />
     <ClInclude Include="src\Engine\Scene\Entity.h" />
     <ClInclude Include="src\Engine\Renderer.h" />

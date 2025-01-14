@@ -12,6 +12,8 @@
 #include"Engine/AssetsManager.h"
 #include"Engine/Model.h"
 #include"Engine/HierarchySystem.h"
+#include"Engine/MovmentControllerSystem.h"
+
 
 using namespace Re_Renderer;
 int main(){
@@ -22,14 +24,15 @@ int main(){
         CameraSystem cameraSystem(window);
         AssetsManager assetManager;
         HierarchySystem hierarchySystem;
+        MovmentControllerSystem movmentControllerSystem(window);
+
 
         glViewport(0, 0, window.Width, window.Height);
 
 
 
 
-        double previousTime = glfwGetTime();
-        int frameCount = 0;
+
         Scene scene;
         
            
@@ -43,13 +46,13 @@ int main(){
        
 
         
-         auto entity = scene.CreateEntity();
-         auto transform = entity.getComponent<Components::Transform>();
+        auto entity = scene.CreateEntity();
+        auto transform = entity.getComponent<Components::Transform>();
         transform->setPosition(0, -50, 010);
         transform->setRotation(90, 0, 0);
 
         entity.addComponent<Components::Camera>();
-
+        entity.addComponent<Components::MovmentController>(15, 15);
 
         
         
@@ -59,21 +62,31 @@ int main(){
 
 
 
+        double previousTime = glfwGetTime(); // to show fps
+        double previousFrame = glfwGetTime(); // to calculate deltatime
+        int frameCount = 0;
+
         while (!window.ShouldClose())
         {
             double currentTime = glfwGetTime();
             frameCount++;
-
+            double deltatime = currentTime - previousFrame;
+            previousFrame = currentTime; 
+             
             if (currentTime - previousTime >= 1.0) {
                 double fps = double(frameCount) / (currentTime - previousTime);
                 std::cout << "FPS: " << fps << std::endl;
 
-                previousTime = currentTime;
                 frameCount = 0;
+                previousTime = currentTime;
             }
 
             t->setPosition(t->getPosition().x, t->getPosition().y - 0.001 * sin(glfwGetTime()) , t->getPosition().z - 0.001 * sin(glfwGetTime()));
 
+
+         
+
+            movmentControllerSystem.UpdateMovment(scene, deltatime);
 
             hierarchySystem.UpdateGlobalTransforms(scene);
             cameraSystem.UpdateCameras(scene);

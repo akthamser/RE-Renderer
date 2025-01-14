@@ -57,5 +57,7 @@ bool Window::ShouldClose() {
 void Window::SwapBuffers() {
     glfwSwapBuffers(m_window);
 }
-
+GLFWwindow* Window::getGLFWwindow() {
+    return m_window;
+}
 

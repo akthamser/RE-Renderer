@@ -6,7 +6,8 @@
 #include<vector>
 #include <glm/gtc/constants.hpp> 
 #include<string>
-#include"Components.h"
+
+
 #include"../../Utils/bitmask.h"
 #include"../../config.h"
 
@@ -116,6 +117,8 @@ namespace Re_Renderer {
 				flags.set(Flags::GLOBAL_SCALE_DIRTY);
 			}
 
+
+
 			bool isDirty()
 			{
 				return flags.isSet(Components::Transform::Flags::GLOBAL_POS_DIRTY)
@@ -130,6 +133,21 @@ namespace Re_Renderer {
 			std::vector<EntID> m_ChildrenIDs;
 			
 
+
+
+			glm::vec3 getForward() const{
+				glm::quat rot = glm::quat(m_GlobalRotation);
+				return glm::normalize(rot * glm::vec3(0.0f, 0.0f, -1.0f)); 
+			}
+
+			glm::vec3 getRight() const{
+				glm::quat rot = glm::quat(m_GlobalRotation);
+				return glm::normalize(rot * glm::vec3(1.0f, 0.0f, 0.0f));
+			}
+			glm::vec3 getUp() const {
+				glm::quat rot = glm::quat(m_GlobalRotation);
+				return glm::normalize(rot * glm::vec3(0.0f, 1.0f, 0.0f));
+			}
 
 		private:
 			glm::vec3 m_LocalPosition = glm::vec3(0); 
