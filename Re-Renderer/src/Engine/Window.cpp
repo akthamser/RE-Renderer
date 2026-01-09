@@ -19,6 +19,8 @@ Window::Window(int width,int height,const char* title,bool fullScreen):Width(wid
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GL_TRUE);
 
+   
+
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
     const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
@@ -31,6 +33,7 @@ Window::Window(int width,int height,const char* title,bool fullScreen):Width(wid
         glfwTerminate();
         return;
     }
+
 
 
     glfwMakeContextCurrent(m_window);

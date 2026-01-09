@@ -35,7 +35,6 @@ namespace Re_Renderer {
 
 	private:
 
-		Window& m_window;
 		std::vector<Shader> m_Shaders;
 		std::unordered_map<Components::Mesh*, OpenGlMesh> m_OpenGlMeshes;
 		std::unordered_map<Texture*, GLuint> m_Textures;

@@ -26,7 +26,7 @@ Model ModelLoader::loadNewModel(const std::string& path,bool flip) {
 
     processNode(scene->mRootNode, scene, &model, directory,flip);
 
-
+    return model;
 };
 
 size_t ModelLoader::countNodes(const aiNode* node) {

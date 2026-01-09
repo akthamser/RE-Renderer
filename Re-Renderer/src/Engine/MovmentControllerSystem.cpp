@@ -26,7 +26,7 @@ void MovmentControllerSystem::UpdateMovment(Scene& scene,float deltatime) {
 		{
 			Input.y++;
 		}
-		if (glfwGetKey(m_window.getGLFWwindow(), GLFW_KEY_S) == GLFW_PRESS)
+		if (glfwGetKey(m_window.getGLFWwindow(), GLFW_KEY_S )|| glfwGetKey(m_window.getGLFWwindow(), GLFW_KEY_C) == GLFW_PRESS)
 		{
 			Input.y--;
 		}
@@ -84,7 +84,18 @@ void MovmentControllerSystem::move(Components::Transform* transform, Components:
 void MovmentControllerSystem::look(Components::Transform* transform, Components::MovmentController* mc, glm::vec2& deltamouse, float deltatime){
 
 	glm::vec3 rot = glm::degrees(transform->getRotation());
-	transform->setRotation(rot.x + deltamouse.y * mc->sensitivity * deltatime,rot.y   ,rot.z + deltamouse.x * mc->sensitivity * deltatime);
+
+	float pitch = rot.x + deltamouse.y * mc->sensitivity * deltatime;
+	float yaw = rot.y + deltamouse.x * mc->sensitivity * deltatime;
+
+	
+	if (pitch > 90.0f)
+		pitch = 90.0f;
+	if (pitch < -90.0f)
+		pitch = -90.0f;
+	
+
+	transform->setRotation(pitch, yaw,rot.z);
 
 
 }

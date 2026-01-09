@@ -31,6 +31,12 @@ int main(){
 
 
 
+        glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+
+        
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+       
 
 
         Scene scene;
@@ -38,18 +44,25 @@ int main(){
            
             
             
-            Model& model = assetManager.loadModel("./Assets/Skull/12140_Skull_v3_L2.obj",false);
-            EntID skullid = scene.CreateModel(model);
-            auto t = scene.getEntityByID(1)->getComponent<Components::Transform>();
-
+        Model& model = assetManager.loadModel("./Assets/Skull/12140_Skull_v3_L2.obj",false);
+        EntID skullid = scene.CreateModel(model);
+        auto t = scene.getEntityByID(skullid)->getComponent<Components::Transform>();
+        t->setPosition(0, 0, 0);
+        t->setRotation(-90,0,0);
+        t->setScale(0.1,0.1,0.1);
 
        
-
+       // auto cube = scene.CreateEntity("cube");
+       // cube.addComponent<Components::Mesh>(cubeMesh);
+       // auto cubeT = cube.getComponent<Components::Transform>();
         
         auto entity = scene.CreateEntity();
         auto transform = entity.getComponent<Components::Transform>();
-        transform->setPosition(0, -50, 010);
-        transform->setRotation(90, 0, 0);
+
+        transform->setPosition(0, 0, 5);
+
+        transform->setRotation(0, 0, 0);
+
 
         entity.addComponent<Components::Camera>();
         entity.addComponent<Components::MovmentController>(15, 15);
@@ -81,8 +94,8 @@ int main(){
                 previousTime = currentTime;
             }
 
-            t->setPosition(t->getPosition().x, t->getPosition().y - 0.001 * sin(glfwGetTime()) , t->getPosition().z - 0.001 * sin(glfwGetTime()));
-
+             t->setPosition(t->getPosition().x, t->getPosition().y - 0.0001 * sin(glfwGetTime()) , t->getPosition().z - 0.0001 * sin(glfwGetTime()));
+            
 
          
 
@@ -90,8 +103,10 @@ int main(){
 
             hierarchySystem.UpdateGlobalTransforms(scene);
             cameraSystem.UpdateCameras(scene);
-            renderer.renderScene(scene);
 
+
+
+            renderer.renderScene(scene);
 
 
             glfwPollEvents();
@@ -107,10 +122,4 @@ int main(){
         return 0;
     
 }
-
-
-
-
-
-
 

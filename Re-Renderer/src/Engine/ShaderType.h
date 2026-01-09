@@ -18,6 +18,7 @@ namespace Re_Renderer {
 
     static std::vector<ShaderPath> shaderPaths = {
         {"vertexShader.vert","fragmentShader.frag"},// Basic
+        {"StandardLit.vert","StandardLit.frag"},// Blin_phong
         {"vertexShader - Copy.vert","fragmentShader - Copy.frag"},// Basic
 
 

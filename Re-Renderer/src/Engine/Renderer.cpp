@@ -10,7 +10,7 @@
 
 namespace Re_Renderer {
 
-    Renderer::Renderer(Window& window) :m_window(window) {
+    Renderer::Renderer(Window& window) {
 
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
@@ -183,15 +183,19 @@ namespace Re_Renderer {
             auto material  = Materials->getComponent(id);
             auto transform = Transforms->getComponent(id);
 
-
-
-            if (activeShader != material->shaderType || m_shader == nullptr)
+            if(material == nullptr&& (activeShader != ShaderType::Basic || m_shader == nullptr))
             {
-                Timer timer("change the Shader");
+               // std::cout << "NO MATERIAL : " << id << std::endl;
+                m_shader = getShader(ShaderType::Basic);
+                activeShader = ShaderType::Basic;
+                m_shader->use();
+            }
+            else if (material != nullptr && (activeShader != material->shaderType || m_shader == nullptr))
+            {
+                //Timer timer("change the Shader");
                 m_shader = getShader(material->shaderType);
                 activeShader = material->shaderType;
                 m_shader->use();
-
             }
 
             if (material != nullptr) {

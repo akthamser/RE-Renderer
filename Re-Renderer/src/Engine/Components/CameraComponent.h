@@ -18,7 +18,7 @@ namespace Re_Renderer {
 		struct Camera  {
 
 
-			Camera(float fov = 45, float aspectRatio = 4 / 3, float nearPlane = 0.1f, float farPlane = 100)
+			Camera(float fov = 45, float aspectRatio = 4 / 3, float nearPlane = 0.1f, float farPlane = 10)
 				:m_FOV(fov), m_AspectRatio(aspectRatio), m_NearClippingPlane(nearPlane), m_FarClippingPlane(farPlane)
 			{
 			};

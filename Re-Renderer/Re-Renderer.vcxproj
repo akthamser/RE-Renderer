@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -149,6 +149,7 @@
     <ClCompile Include="src\Dependencies\stb_image.cpp" />
     <ClCompile Include="src\Engine\CameraSystem.cpp" />
     <ClCompile Include="src\Engine\HierarchySystem.cpp" />
+    <ClCompile Include="src\Engine\LightSystem.cpp" />
     <ClCompile Include="src\Engine\MovmentControllerSystem.cpp" />
     <ClCompile Include="src\Engine\Scene\Entity.cpp" />
     <ClCompile Include="src\Engine\Renderer.cpp" />
@@ -168,11 +169,13 @@
     <ClInclude Include="src\Engine\Components\CameraComponent.h" />
     <ClInclude Include="src\Engine\Components\Components.h" />
     <ClInclude Include="src\Engine\ComponentsHandler.h" />
+    <ClInclude Include="src\Engine\Components\LightComponent.h" />
     <ClInclude Include="src\Engine\Components\MaterialComponent.h" />
     <ClInclude Include="src\Engine\Components\MeshComponent.h" />
     <ClInclude Include="src\Engine\Components\MovmentControllerComponent.h" />
     <ClInclude Include="src\Engine\Components\TransformComponent.h" />
     <ClInclude Include="src\Engine\HierarchySystem.h" />
+    <ClInclude Include="src\Engine\LightSystem.h" />
     <ClInclude Include="src\Engine\Model.h" />
     <ClInclude Include="src\Engine\MovmentControllerSystem.h" />
     <ClInclude Include="src\Engine\Resources.h" />
@@ -195,6 +198,8 @@
   <ItemGroup>
     <None Include="src\Engine\Shaders\fragmentShader - Copy.frag" />
     <None Include="src\Engine\Shaders\fragmentShader.frag" />
+    <None Include="src\Engine\Shaders\StandardLit.frag" />
+    <None Include="src\Engine\Shaders\StandardLit.vert" />
     <None Include="src\Engine\Shaders\vertexShader - Copy.vert" />
     <None Include="src\Engine\Shaders\vertexShader.vert" />
   </ItemGroup>
