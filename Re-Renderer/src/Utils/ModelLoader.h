@@ -1,12 +1,12 @@
 #pragma once
-#include"../Engine/Scene/Entity.h"
-#include"../engine/Scene/Scene.h"
+#include"../ECS/Scene/Entity.h"
+#include"../ECS/Scene/Scene.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include"../engine/Model.h"
+#include"../ECS/Model.h"
 #include<iostream>
-#include"../Dependencies/stb_image.h"
+#include"../../Dependencies/stb_image.h"
 
 namespace Re_Renderer {
 

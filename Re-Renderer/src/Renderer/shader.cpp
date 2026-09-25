@@ -1,0 +1,152 @@
+
+#include "shader.h"
+#include <glm/gtc/type_ptr.hpp>
+
+void checkCompileErrors(unsigned int shader, std::string type);
+
+
+Shader::Shader(const char* vertexFile, const char* fragmentFile)
+{
+
+
+    std::string vShaderdata = ReadShaderfromFile(std::string(SHADER_PATH) + vertexFile);
+    std::string fShaderdata = ReadShaderfromFile(std::string(SHADER_PATH) + fragmentFile);
+    const char* vShaderCode = vShaderdata.c_str();
+    const char* fShaderCode = fShaderdata.c_str();
+   
+    unsigned int vertex, fragment;
+    
+
+    vertex = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertex, 1, &vShaderCode, NULL);
+    glCompileShader(vertex);
+    checkCompileErrors(vertex, "VERTEX");
+    
+
+    fragment = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragment, 1, &fShaderCode, NULL);
+    glCompileShader(fragment);
+    checkCompileErrors(fragment, "FRAGMENT");
+    
+    ID = glCreateProgram();
+    std::cout << vertexFile <<"shadercreated  id = " << ID << std::endl;
+    glAttachShader(ID, vertex);
+    glAttachShader(ID, fragment);
+    glLinkProgram(ID);
+    checkCompileErrors(ID, "PROGRAM");
+   
+
+    glDeleteShader(vertex);
+    glDeleteShader(fragment);
+}
+
+Shader::~Shader() {
+    std::cout << "SHADER DELETED " << ID << std::endl;
+    glDeleteProgram(ID);
+}
+
+void Shader::use()
+{
+    glUseProgram(ID);
+}
+
+
+
+void Shader::setBool(const std::string& name, bool value) const
+{
+    glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
+}
+
+void Shader::setInt(const std::string& name, int value) const
+{
+    glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
+}
+
+void Shader::setFloat(const std::string& name, float value) const
+{
+    glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+}
+
+void Shader::setVec2(const std::string& name, float x, float y) const
+{
+    glUniform2f(glGetUniformLocation(ID, name.c_str()), x, y);
+}
+
+void Shader::setVec3(const std::string& name, float x, float y, float z) const
+{
+    glUniform3f(glGetUniformLocation(ID, name.c_str()), x, y, z);
+}
+
+void Shader::setVec3(const std::string& name,glm::vec3 vec) const
+{
+    glUniform3f(glGetUniformLocation(ID, name.c_str()), vec.x, vec.y, vec.z);
+}
+
+
+void Shader::setVec4(const std::string& name, float x, float y, float z, float w) const
+{
+    glUniform4f(glGetUniformLocation(ID, name.c_str()), x, y, z, w);
+}
+
+void Shader::setMat4(const std::string& name, const glm::mat4& mat) const
+{
+    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+
+
+
+
+
+void checkCompileErrors(unsigned int shader, std::string type)
+{
+    int success;
+    char infoLog[1024];
+    if (type != "PROGRAM")
+    {
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+        if (!success)
+        {
+            glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+            std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+        }
+    }
+    else
+    {
+        glGetProgramiv(shader, GL_LINK_STATUS, &success);
+        if (!success)
+        {
+            glGetProgramInfoLog(shader, 1024, NULL, infoLog);
+            std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+        }
+    }
+}
+
+
+// --- NEW: Compute Shader Constructor ---
+Shader::Shader(const char* computeFile)
+{
+    // 1. Read shader code using your existing utility
+    std::string cShaderData = ReadShaderfromFile(std::string(SHADER_PATH) + computeFile);
+    const char* cShaderCode = cShaderData.c_str();
+
+    unsigned int compute;
+
+    // 2. Create and Compile Shader
+    // Note: We use GL_COMPUTE_SHADER here
+    compute = glCreateShader(GL_COMPUTE_SHADER);
+    glShaderSource(compute, 1, &cShaderCode, NULL);
+    glCompileShader(compute);
+    checkCompileErrors(compute, "COMPUTE"); // We check for "COMPUTE" errors
+
+    // 3. Create Program
+    ID = glCreateProgram();
+    std::cout << computeFile << " shader created, id = " << ID << std::endl;
+
+    glAttachShader(ID, compute);
+    glLinkProgram(ID);
+    checkCompileErrors(ID, "PROGRAM");
+
+    // 4. Cleanup
+    glDeleteShader(compute);
+}

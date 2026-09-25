@@ -113,7 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(Solutiondir)Dependencies\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Solutiondir)Dependencies\include;$(Solutiondir)Re-Renderer\Dependencies\imGui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -131,7 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(Solutiondir)Dependencies\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Solutiondir)Dependencies\include;$(Solutiondir)Re-Renderer\Dependencies\imGui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -144,64 +144,94 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dependencies\imGui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Dependencies\imGui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Dependencies\imGui\imgui.cpp" />
+    <ClCompile Include="Dependencies\imGui\imgui_demo.cpp" />
+    <ClCompile Include="Dependencies\imGui\imgui_draw.cpp" />
+    <ClCompile Include="Dependencies\imGui\imgui_tables.cpp" />
+    <ClCompile Include="Dependencies\imGui\imgui_widgets.cpp" />
+    <ClCompile Include="src\ECS\Components\ClothComponent.h" />
+    <ClCompile Include="src\Renderer\RayTracer\RayTracer.cpp" />
     <ClCompile Include="src\app.cpp" />
-    <ClCompile Include="src\Dependencies\glad.c" />
-    <ClCompile Include="src\Dependencies\stb_image.cpp" />
-    <ClCompile Include="src\Engine\CameraSystem.cpp" />
-    <ClCompile Include="src\Engine\HierarchySystem.cpp" />
-    <ClCompile Include="src\Engine\LightSystem.cpp" />
-    <ClCompile Include="src\Engine\MovmentControllerSystem.cpp" />
-    <ClCompile Include="src\Engine\Scene\Entity.cpp" />
-    <ClCompile Include="src\Engine\Renderer.cpp" />
-    <ClCompile Include="src\Engine\AssetsManager.cpp" />
-    <ClCompile Include="src\Engine\Scene\Scene.cpp" />
-    <ClCompile Include="src\Engine\shader.cpp" />
-    <ClCompile Include="src\Engine\Window.cpp" />
-    <ClCompile Include="src\ScreenRecorder.cpp" />
+    <ClCompile Include="Dependencies\glad.c" />
+    <ClCompile Include="Dependencies\stb_image.cpp" />
+    <ClCompile Include="src\ECS\Systems\CameraSystem.cpp" />
+    <ClCompile Include="src\ECS\Systems\HierarchySystem.cpp" />
+    <ClCompile Include="src\ECS\Systems\MovmentControllerSystem.cpp" />
+    <ClCompile Include="src\ECS\Scene\Entity.cpp" />
+    <ClCompile Include="src\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\ECS\AssetsManager.cpp" />
+    <ClCompile Include="src\ECS\Scene\Scene.cpp" />
+    <ClCompile Include="src\Renderer\shader.cpp" />
+    <ClCompile Include="src\Core\Window.cpp" />
+    <ClCompile Include="src\Utils\ScreenRecorder.cpp" />
     <ClCompile Include="src\Utils\ModelLoader.cpp" />
     <ClCompile Include="src\Utils\TextureLoader.cpp" />
     <ClCompile Include="src\Utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\config.h" />
-    <ClInclude Include="src\Dependencies\stb_image.h" />
-    <ClInclude Include="src\Engine\CameraSystem.h" />
-    <ClInclude Include="src\Engine\Components\CameraComponent.h" />
-    <ClInclude Include="src\Engine\Components\Components.h" />
-    <ClInclude Include="src\Engine\ComponentsHandler.h" />
-    <ClInclude Include="src\Engine\Components\LightComponent.h" />
-    <ClInclude Include="src\Engine\Components\MaterialComponent.h" />
-    <ClInclude Include="src\Engine\Components\MeshComponent.h" />
-    <ClInclude Include="src\Engine\Components\MovmentControllerComponent.h" />
-    <ClInclude Include="src\Engine\Components\TransformComponent.h" />
-    <ClInclude Include="src\Engine\HierarchySystem.h" />
-    <ClInclude Include="src\Engine\LightSystem.h" />
-    <ClInclude Include="src\Engine\Model.h" />
-    <ClInclude Include="src\Engine\MovmentControllerSystem.h" />
-    <ClInclude Include="src\Engine\Resources.h" />
-    <ClInclude Include="src\Engine\Scene\Entity.h" />
-    <ClInclude Include="src\Engine\Renderer.h" />
-    <ClInclude Include="src\Engine\AssetsManager.h" />
-    <ClInclude Include="src\Engine\Scene\Scene.h" />
-    <ClInclude Include="src\Engine\shader.h" />
-    <ClInclude Include="src\Engine\ComponentRegistry.h" />
-    <ClInclude Include="src\Engine\ShaderType.h" />
-    <ClInclude Include="src\Engine\Texture.h" />
-    <ClInclude Include="src\Engine\Timer.hpp" />
-    <ClInclude Include="src\Engine\Window.h" />
-    <ClInclude Include="src\ScreenRecorder.h" />
+    <ClInclude Include="Dependencies\imGui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="Dependencies\imGui\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="Dependencies\imGui\backends\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Dependencies\imGui\imconfig.h" />
+    <ClInclude Include="Dependencies\imGui\imgui.h" />
+    <ClInclude Include="Dependencies\imGui\imgui_internal.h" />
+    <ClInclude Include="Dependencies\imGui\imstb_rectpack.h" />
+    <ClInclude Include="Dependencies\imGui\imstb_textedit.h" />
+    <ClInclude Include="Dependencies\imGui\imstb_truetype.h" />
+    <ClInclude Include="Dependencies\tiny_bvh.h" />
+    <ClInclude Include="src\Renderer\RayTracer\BVH.h" />
+    <ClInclude Include="src\ECS\Components\ColliderComponent.h" />
+    <ClInclude Include="src\Core\EditorSystem.h" />
+    <ClInclude Include="src\ECS\Systems\PhysicsSystem.h" />
+    <ClInclude Include="src\ECS\PrimitiveGenerator.h" />
+    <ClInclude Include="src\Renderer\RayTracer\RayTracer.h" />
+    <ClInclude Include="src\ECS\config.h" />
+    <ClInclude Include="Dependencies\stb_image.h" />
+    <ClInclude Include="src\ECS\Systems\CameraSystem.h" />
+    <ClInclude Include="src\ECS\Components\CameraComponent.h" />
+    <ClInclude Include="src\ECS\Components\Components.h" />
+    <ClInclude Include="src\ECS\Scene\ComponentsHandler.h" />
+    <ClInclude Include="src\ECS\Components\LightComponent.h" />
+    <ClInclude Include="src\ECS\Components\MaterialComponent.h" />
+    <ClInclude Include="src\ECS\Components\MeshComponent.h" />
+    <ClInclude Include="src\ECS\Components\MovmentControllerComponent.h" />
+    <ClInclude Include="src\ECS\Components\TransformComponent.h" />
+    <ClInclude Include="src\ECS\Systems\HierarchySystem.h" />
+    <ClInclude Include="src\ECS\Model.h" />
+    <ClInclude Include="src\ECS\Systems\MovmentControllerSystem.h" />
+    <ClInclude Include="src\ECS\Scene\Entity.h" />
+    <ClInclude Include="src\Renderer\Renderer.h" />
+    <ClInclude Include="src\ECS\AssetsManager.h" />
+    <ClInclude Include="src\ECS\Scene\Scene.h" />
+    <ClInclude Include="src\Renderer\shader.h" />
+    <ClInclude Include="src\ECS\Scene\ComponentRegistry.h" />
+    <ClInclude Include="src\Renderer\ShaderType.h" />
+    <ClInclude Include="src\Renderer\Texture.h" />
+    <ClInclude Include="src\Utils\Timer.hpp" />
+    <ClInclude Include="src\Core\Window.h" />
+    <ClInclude Include="src\Utils\ScreenRecorder.h" />
     <ClInclude Include="src\Utils\bitmask.h" />
     <ClInclude Include="src\Utils\ModelLoader.h" />
     <ClInclude Include="src\Utils\TextureLoader.h" />
     <ClInclude Include="src\Utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\Engine\Shaders\fragmentShader - Copy.frag" />
-    <None Include="src\Engine\Shaders\fragmentShader.frag" />
-    <None Include="src\Engine\Shaders\StandardLit.frag" />
-    <None Include="src\Engine\Shaders\StandardLit.vert" />
-    <None Include="src\Engine\Shaders\vertexShader - Copy.vert" />
-    <None Include="src\Engine\Shaders\vertexShader.vert" />
+    <None Include="Dependencies\imGui\.editorconfig" />
+    <None Include="Dependencies\imGui\.gitattributes" />
+    <None Include="Dependencies\imGui\.gitignore" />
+    <None Include="src\Renderer\Shaders\fragmentShader - Copy.frag" />
+    <None Include="src\Renderer\Shaders\fragmentShader.frag" />
+    <None Include="src\Renderer\Shaders\raytracer.comp" />
+    <None Include="src\Renderer\Shaders\screenQuad.frag" />
+    <None Include="src\Renderer\Shaders\screenQuad.vert" />
+    <None Include="src\Renderer\Shaders\SkyBox.frag" />
+    <None Include="src\Renderer\Shaders\SkyBox.vert" />
+    <None Include="src\Renderer\Shaders\StandardLit.frag" />
+    <None Include="src\Renderer\Shaders\StandardLit.vert" />
+    <None Include="src\Renderer\Shaders\vertexShader - Copy.vert" />
+    <None Include="src\Renderer\Shaders\vertexShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="src\Resources\skybox\bluecloud_bk.jpg" />
@@ -234,6 +264,10 @@
     <Image Include="src\Resources\skybox\miramar_lf.tga" />
     <Image Include="src\Resources\skybox\miramar_rt.tga" />
     <Image Include="src\Resources\skybox\miramar_up.tga" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
+    <Text Include="Dependencies\imGui\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
