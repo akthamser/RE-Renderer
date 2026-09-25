@@ -2,8 +2,8 @@
 
 
 #include<iostream>
-#include"../Dependencies/stb_image.h"
-#include"../Engine/Texture.h"
+#include"../../Dependencies/stb_image.h"
+#include"../Renderer/Texture.h"
 
 namespace Re_Renderer {
 
